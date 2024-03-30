@@ -10,3 +10,5 @@ def instance_change(self, obj, perf, sprGroup):
         pass
     if perf == True:
         obj.create()
+    # copy position
+    obj.rect.center = self.rect.center
