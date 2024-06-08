@@ -31,7 +31,7 @@ with open("input.txt") as f:
                     fileNormalTiles.write(str(0))
                     fileMirroredTiles.write(str(0))
                     fileRotatedTiles.write(str(0))
-                    fileRotateAndMirroredTiles.write(str(intValue + 3))
+                    fileRotateAndMirroredTiles.write(str(intValue + 2))
                     tiles_rotate_mirrored = tiles_rotate_mirrored + 1
                 elif (intValue & TileRotate_Mask):
                     intValue = intValue & TileIndex_ShiftedMask
