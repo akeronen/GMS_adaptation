@@ -3,7 +3,19 @@ from pygame.sprite import Group, GroupSingle
 
 # Fast collision detection, returning True / False
 def place_meeting(self, x, y, sprGrp):
+    sourceWithMask = False
+    targetsWithMask = 0
+
     if not hasattr(self, 'mask'):
+        sourceWithMask = True
+
+    for sprTarget in sprGrp:
+        if hasattr(sprTarget, 'mask'):
+            targetsWithMask = targetsWithMask + 1
+
+    # simplest case
+    if not sourceWithMask and targetsWithMask == 0:
+        # source has no mask and not any targets are with mask
         original_x = self.x
         original_y = self.y
         self.x = x
@@ -16,10 +28,11 @@ def place_meeting(self, x, y, sprGrp):
         else:
             return True
     else:
+        # source or any targets are using masks... use slowest
         original_x = self.x
         original_y = self.y
         self.x = x
-        self.y = y
+        self.y = y        
         retVal = pygame.sprite.spritecollideany(self, sprGrp, pygame.sprite.collide_mask)
         self.x = original_x
         self.y = original_y
@@ -30,7 +43,18 @@ def place_meeting(self, x, y, sprGrp):
 
 # Fast collision detection, for single collision, returning None / Object
 def instance_place(self, x, y, sprGrp):    
+    sourceWithMask = False
+    targetsWithMask = 0
+
     if not hasattr(self, 'mask'):
+        sourceWithMask = True
+
+    for sprTarget in sprGrp:
+        if hasattr(sprTarget, 'mask'):
+            targetsWithMask = targetsWithMask + 1
+
+    # for simple rect (without indicated by having a mask)
+    if not sourceWithMask and targetsWithMask == 0:
         original_x = self.x
         original_y = self.y
         self.x = x
@@ -50,9 +74,20 @@ def instance_place(self, x, y, sprGrp):
         return retVal
 
 # For check_n_invoke_collisions, multiple collisions
-def instance_place_all(self, x, y, sprGrp):    
-    # for simple rect (without indicated by having a mask)
+def instance_place_all(self, x, y, sprGrp):   
+    sourceWithMask = False
+    targetsWithMask = 0
+
     if not hasattr(self, 'mask'):
+        sourceWithMask = True
+
+    for sprTarget in sprGrp:
+        if hasattr(sprTarget, 'mask'):
+            targetsWithMask = targetsWithMask + 1
+
+    # simplest case
+    if not sourceWithMask and targetsWithMask == 0:
+        # source has no mask and not any targets are with mask
         original_x = self.x
         original_y = self.y
         self.x = x
@@ -62,10 +97,10 @@ def instance_place_all(self, x, y, sprGrp):
         self.y = original_y
         return retVals
     else:
+        # source or any targets are using masks... use slowest
         original_x = self.x
         original_y = self.y
         self.x = x
-        self.y = y
         retVals = pygame.sprite.spritecollide(self, sprGrp, False, pygame.sprite.collide_mask)
         self.x = original_x
         self.y = original_y
