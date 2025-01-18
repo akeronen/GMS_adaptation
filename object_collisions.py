@@ -13,10 +13,8 @@ class Object_Collisions(pygame.sprite.Sprite):
 
     # Add multiple collision groups at the same time
     def add_interacting_collision_groups(self, identifier, *sprGroups: pygame.sprite.Group):
-        addedGroups = []
         for aGroup in sprGroups:
-            addedGroups.append(aGroup)
-        self.collision_groups[identifier] = addedGroups
+            self.collision_groups[identifier] = aGroup
 
     # Actual collision checking and invoking
     def check_collisions(self):
