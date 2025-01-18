@@ -101,6 +101,7 @@ def instance_place_all(self, x, y, sprGrp):
         original_x = self.x
         original_y = self.y
         self.x = x
+        self.y = y
         retVals = pygame.sprite.spritecollide(self, sprGrp, False, pygame.sprite.collide_mask)
         self.x = original_x
         self.y = original_y
