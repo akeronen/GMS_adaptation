@@ -1,11 +1,11 @@
 import pygame, sys
 from collisions import *
 
-class Object_Collisions():
+class Object_Collisions(pygame.sprite.Sprite):
     collision_groups = {}
 
     def __init__(self):
-        pass
+        super().__init__()
 
     # Add another collision group to this object (if interacts with it)
     def add_interacting_collision_group(self, identifier, sprGroup: pygame.sprite.Group):
