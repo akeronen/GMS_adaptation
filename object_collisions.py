@@ -1,6 +1,5 @@
 import pygame, sys
 from collisions import *
-from events_inherited import *
 
 class Object_Collisions():
     collision_groups = {}
